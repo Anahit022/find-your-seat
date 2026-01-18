@@ -34,28 +34,31 @@
     box-sizing:border-box;
   }
   #results { 
-    width:90%; 
-    max-width:500px; 
-    display:flex; 
-    flex-direction:column; 
-    gap:10px;
+    width: 95%; 
+    max-width: 500px; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px;
   }
   .row { 
-    display:flex; 
-    justify-content:space-between; 
-    align-items:center; 
-    padding:12px 20px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; /* <<<<< Կենտրոնացված գիծը */
+    padding: 10px 15px; /* <<<<< Կրճատված պադինգ հեռախոսի համար */
     background-color: rgba(255,255,255,0.1); 
-    border-radius:15px; 
+    border-radius: 12px; 
     word-break: break-word; 
-    font-size:1rem;
+    font-size: 0.95rem; /* <<<<< Փոքր տեքստ հեռախոսի համար */
   }
   .table { 
     color:#800020; 
     font-weight:700; 
   }
   @media (max-width:400px){ 
-    #search, .row{ font-size:0.9rem; padding:10px 15px;}
+    #search, .row{ 
+    font-size: 0.85rem; 
+    padding: 8px 12px; 
+    }
   }
 </style>
 </head>
