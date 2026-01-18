@@ -12,7 +12,7 @@ body {
   background: linear-gradient(to right, #800020, #000);
   color: #fff;
   margin: 0;
-  padding: 40px 20px;
+  padding: 30px 15px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -20,21 +20,21 @@ body {
 }
 
 h1 { 
-  font-size: 28px; 
-  margin-bottom: 25px; 
+  font-size: 24px;
+  margin-bottom: 20px; 
   text-align:center; 
 }
 
 input {
   width: 100%; 
-  max-width: 400px; 
-  font-size: 18px;
-  padding: 14px 18px; 
-  border-radius: 10px; 
+  max-width: 360px; 
+  font-size: 16px; 
+  padding: 10px 14px; 
+  border-radius: 8px; 
   border: none;
   outline: none; 
-  box-shadow: 0 3px 8px rgba(0,0,0,0.3);
-  margin-bottom: 25px; 
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  margin-bottom: 20px; 
   background: #fff; 
   color: #000; 
   font-weight: 500;
@@ -47,27 +47,27 @@ input::placeholder {
 
 #results { 
   width: 100%; 
-  max-width: 500px; 
+  max-width: 360px; 
 }
 
 /* ===== ROW STYLE ===== */
 .row {
-  padding: 14px 18px; 
-  margin-bottom: 12px; 
+  padding: 10px 14px; 
+  margin-bottom: 10px; 
   background: #fff;
   color: #000; 
-  border-radius: 8px; 
+  border-radius: 6px; 
   display: flex; 
-  justify-content: space-between; /* Անունը ձախ, սեղանը աջ */
-  align-items: center; /* Կենտրոնական գիծ */
-  font-size: 16px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  justify-content: space-between; 
+  align-items: center; /* Անունն ու սեղանը կենտրոնում են */
+  font-size: 14px; 
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .row:hover { 
-  transform: translateY(-2px); 
-  box-shadow: 0 6px 14px rgba(0,0,0,0.25); 
+  transform: translateY(-1px); 
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2); 
 }
 
 .guest-name {
@@ -78,21 +78,23 @@ input::placeholder {
 .table {
   font-weight: 600; 
   color: #800020; 
-  margin-left: 15px; 
-  flex-shrink: 0; /* Սեղանը չի կրճատվի */
+  margin-left: 10px; 
+  flex-shrink: 0; 
+  white-space: nowrap; /* Սեղանը չի կոտրվի */
 }
 
 /* ===== MOBILE ===== */
 @media (max-width: 600px) {
-  body { padding: 20px 15px; }
-  input { font-size: 16px; }
+  body { padding: 20px 10px; }
+  input { font-size: 15px; padding: 8px 12px; max-width: 100%; }
   .row { 
-    font-size: 15px; 
-    flex-direction: row; /* Մնում է նույն տողում */ 
-    align-items: center; /* Կենտրոնում լինի */ 
+    font-size: 13px; 
+    flex-direction: row; 
+    align-items: center; /* Կենտրոնում */ 
     justify-content: space-between;
-    gap: 10px;
+    gap: 8px;
   }
+  #results { max-width: 100%; }
 }
 </style>
 </head>
@@ -104,17 +106,14 @@ input::placeholder {
 
 <script>
 // ===== GOOGLE SHEET SETTINGS =====
-const SHEET_ID = "1GF1ARQ52zejxKaIpS2At_D87OWhq92PYzVYCynDnItY"; // <-- այստեղ Google Sheets ID դնես
-const SHEET_NAME = "Sheet1";    // <-- եթե էջի անունը փոխել ես, գրիր այն
+const SHEET_ID = "1GF1ARQ52zejxKaIpS2At_D87OWhq92PYzVYCynDnItY";
+const SHEET_NAME = "Sheet1";
 let guests = [];
 
 // ===== FETCH DATA FROM GOOGLE SHEET =====
 fetch(`https://opensheet.elk.sh/${SHEET_ID}/${SHEET_NAME}`)
   .then(res => res.json())
-  .then(data => {
-    guests = data;
-    console.log("Guests loaded:", guests); // ստուգելու համար
-  })
+  .then(data => { guests = data; })
   .catch(err => console.error("Error fetching sheet:", err));
 
 // ===== SEARCH FUNCTION =====
@@ -122,7 +121,7 @@ function search(value) {
   const input = value.toLowerCase().trim();
   const result = document.getElementById("results");
 
-  // Եթե տեքստ չկա, հեռացրեք ցուցադրումը
+  // Եթե տեքստ չկա, ցուցադրումը հեռացնել
   if(input === "") {
     result.innerHTML = "";
     return;
