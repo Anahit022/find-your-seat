@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Find Your Seat</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #ffffff;
+    padding: 40px 20px;
+  }
+
+  h1 {
+    text-align: center;
+    font-weight: 400;
+    margin-bottom: 30px;
+  }
+
+  input {
+    width: 100%;
+    font-size: 18px;
+    padding: 12px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    outline: none;
+  }
+
+  .result {
+    margin-top: 20px;
+  }
+
+  .row {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 16px;
+  }
+
+  .table {
+    color: #666;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>Please Find Your Seat</h1>
+
+<input
+  type="text"
+  placeholder="Type your name"
+  oninput="search(this.value)"
+>
+
+<div class="result" id="result"></div>
+
+<script>
+let guests = [
+  { Name: "Maria Harris", Table: 2 },
+  { Name: "Thomas Martin", Table: 3 },
+  { Name: "Lisa Martinez", Table: 3 }
+];
+
+function search(value) {
+  const result = document.getElementById("result");
+  result.innerHTML = "";
+
+  if (value.length < 2) return;
+
+  const matches = guests.filter(g =>
+    g.Name.toLowerCase().includes(value.toLowerCase())
+  );
+
+  matches.forEach(g => {
+    result.innerHTML += `
+      <div class="row">
+        ${g.Name} <span class="table">| Table ${g.Table}</span>
+      </div>
+    `;
+  });
+}
+</script>
+
+</body>
+</html>
