@@ -12,30 +12,40 @@ body {
   background: linear-gradient(to right, #800020, #000);
   color: #fff;
   margin: 0;
-  padding: 30px 10px;
+  padding: 0;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+/* ===== CENTER CONTENT ===== */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1; /* Նորացնել միջին հատվածում կենտրոնացման համար */
+  padding: 20px 10px;
+}
+
 h1 { 
   font-size: 24px;
-  margin-bottom: 20px; 
+  margin-bottom: 40px; /* ավելացրեց հեռավորությունը որոնման input-ից */
   text-align:center; 
 }
 
 /* ===== INPUT ===== */
 input {
   width: 90%; 
-  max-width: 280px; /* փոքր, կարճ լայնություն */
+  max-width: 280px; 
   font-size: 16px; 
   padding: 12px 20px; 
-  border-radius: 50px; /* օվալ ձև */
+  border-radius: 50px; 
   border: none;
   outline: none; 
   box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-  margin-bottom: 15px; 
+  margin-bottom: 20px; 
   background: #fff; 
   color: #000; 
   font-weight: 500;
@@ -57,14 +67,14 @@ input::placeholder {
   margin-bottom: 10px; 
   background: #fff;
   color: #000; 
-  border-radius: 50px; /* օվալ ձև */
+  border-radius: 50px; 
   display: flex; 
-  justify-content: center; /* կենտրոնացնում է name & table միասին */
-  align-items: center; /* կենտրոնական գիծ */
+  justify-content: center; 
+  align-items: center; 
   font-size: 14px; 
   box-shadow: 0 1px 4px rgba(0,0,0,0.15);
   transition: transform 0.2s, box-shadow 0.2s;
-  gap: 10px; /* անունի և սեղանի միջև փոքր տարածություն */
+  gap: 10px; 
 }
 
 .row:hover { 
@@ -95,9 +105,11 @@ input::placeholder {
 </head>
 <body>
 
-<h1>Գտիր քո սեղանը</h1>
-<input type="text" placeholder="Գրեք Ձեր անունը " oninput="search(this.value)">
-<div id="results"></div>
+<div class="container">
+  <h1>Գտիր քո սեղանը</h1>
+  <input type="text" placeholder="Գրեք Ձեր անունը" oninput="search(this.value)">
+  <div id="results"></div>
+</div>
 
 <script>
 // ===== GOOGLE SHEET SETTINGS =====
