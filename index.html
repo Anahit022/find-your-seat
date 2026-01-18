@@ -67,12 +67,19 @@ fetch(`https://opensheet.elk.sh/${SHEET_ID}/${SHEET_NAME}`)
 // ===== SEARCH FUNCTION =====
 function search(value) {
   const input = value.toLowerCase().trim();
+  const result = document.getElementById("results");
+  
+  // Եթե input դատարկ է, ոչինչ չցուցադրել
+  if (input === "") {
+    result.innerHTML = "";
+    return;
+  }
+
   const matches = guests.filter(g =>
     g.Name.toLowerCase().includes(input) ||
     (g.Հայերեն_Անուն && g.Հայերեն_Անուն.toLowerCase().includes(input))
   );
 
-  const result = document.getElementById("results");
   result.innerHTML = "";
 
   if(matches.length === 0) {
