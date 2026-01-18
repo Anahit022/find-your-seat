@@ -6,6 +6,7 @@
 <title>Գտիր քո սեղանը</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
 body {
   font-family: 'Montserrat', sans-serif;
   background: linear-gradient(to right, #800020, #000);
@@ -17,36 +18,88 @@ body {
   flex-direction: column;
   align-items: center;
 }
-h1 { font-size: 28px; margin-bottom: 25px; text-align:center; }
-input {
-  width: 100%; max-width: 400px; font-size: 18px;
-  padding: 14px 18px; border-radius: 10px; border: none;
-  outline: none; box-shadow: 0 3px 8px rgba(0,0,0,0.3);
-  margin-bottom: 25px; background: #fff; color: #000; font-weight: 500;
+
+h1 { 
+  font-size: 28px; 
+  margin-bottom: 25px; 
+  text-align:center; 
 }
-input::placeholder { color: #555; font-style: italic; }
-#results { width: 100%; max-width: 500px; }
+
+input {
+  width: 100%; 
+  max-width: 400px; 
+  font-size: 18px;
+  padding: 14px 18px; 
+  border-radius: 10px; 
+  border: none;
+  outline: none; 
+  box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+  margin-bottom: 25px; 
+  background: #fff; 
+  color: #000; 
+  font-weight: 500;
+}
+
+input::placeholder { 
+  color: #555; 
+  font-style: italic; 
+}
+
+#results { 
+  width: 100%; 
+  max-width: 500px; 
+}
+
+/* ===== ROW STYLE ===== */
 .row {
-  padding: 14px 18px; margin-bottom: 12px; background: #fff;
-  color: #000; border-radius: 8px; display: flex; justify-content: space-between;
-  align-items: center; font-size: 16px;
+  padding: 14px 18px; 
+  margin-bottom: 12px; 
+  background: #fff;
+  color: #000; 
+  border-radius: 8px; 
+  display: flex; 
+  justify-content: space-between; /* Անունը ձախ, սեղանը աջ */
+  align-items: center; /* Կենտրոնական գիծ */
+  font-size: 16px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
   transition: transform 0.2s, box-shadow 0.2s;
 }
-.row:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(0,0,0,0.25); }
-.table { font-weight: 600; color: #800020; }
+
+.row:hover { 
+  transform: translateY(-2px); 
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25); 
+}
+
+.guest-name {
+  flex: 1; /* Անունը զբաղեցնում է մնացած տարածությունը */
+  font-weight: 500;
+}
+
+.table {
+  font-weight: 600; 
+  color: #800020; 
+  margin-left: 15px; 
+  flex-shrink: 0; /* Սեղանը չի կրճատվի */
+}
+
+/* ===== MOBILE ===== */
 @media (max-width: 600px) {
   body { padding: 20px 15px; }
   input { font-size: 16px; }
-  .row { font-size: 15px; flex-direction: column; align-items: flex-start; }
-  .table { margin-top: 6px; float: none; }
+  .row { 
+    font-size: 15px; 
+    flex-direction: row; /* Մնում է նույն տողում */ 
+    align-items: center; /* Կենտրոնում լինի */ 
+    justify-content: space-between;
+    gap: 10px;
+  }
 }
 </style>
 </head>
 <body>
 
 <h1>Գտիր քո սեղանը</h1>
-<input type="text" placeholder="Գրիր անունը հայերեն կամ անգլերեն" oninput="search(this.value)">
+<input type="text" placeholder="Գրեք Ձեր անունը" oninput="search(this.value)">
 <div id="results"></div>
 
 <script>
@@ -67,12 +120,19 @@ fetch(`https://opensheet.elk.sh/${SHEET_ID}/${SHEET_NAME}`)
 // ===== SEARCH FUNCTION =====
 function search(value) {
   const input = value.toLowerCase().trim();
+  const result = document.getElementById("results");
+
+  // Եթե տեքստ չկա, հեռացրեք ցուցադրումը
+  if(input === "") {
+    result.innerHTML = "";
+    return;
+  }
+
   const matches = guests.filter(g =>
     g.Name.toLowerCase().includes(input) ||
     (g.Հայերեն_Անուն && g.Հայերեն_Անուն.toLowerCase().includes(input))
   );
 
-  const result = document.getElementById("results");
   result.innerHTML = "";
 
   if(matches.length === 0) {
@@ -83,7 +143,8 @@ function search(value) {
   matches.forEach(g => {
     result.innerHTML += `
       <div class="row">
-        ${g.Name} | ${g.Հայերեն_Անուն || ''} <span class="table">Սեղան ${g.Table}</span>
+        <div class="guest-name">${g.Name} | ${g.Հայերեն_Անուն || ''}</div>
+        <span class="table">Սեղան ${g.Table}</span>
       </div>
     `;
   });
