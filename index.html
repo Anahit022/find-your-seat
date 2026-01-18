@@ -13,27 +13,23 @@ body {
   color:#fff;
   display:flex; flex-direction:column; align-items:center; min-height:100vh;
 }
-
 h1 {
   text-align:center; margin:30px 10px 20px 10px; font-weight:700; font-size:2rem;
 }
-
 #search {
   width:90%; max-width:500px;
   padding:12px 20px;
   font-size:1.1rem; border-radius:25px; border:none;
   margin-bottom:20px; box-sizing:border-box;
 }
-
 #results {
   width:95%; max-width:500px;
   display:flex; flex-direction:column; gap:10px;
 }
-
 .row {
   display:flex;
   justify-content:space-between;
-  align-items:center; /* կենտրոնացված */
+  align-items:center;
   padding:10px 15px;
   background-color: rgba(255,255,255,0.1);
   border-radius:12px;
@@ -41,21 +37,9 @@ h1 {
   flex-wrap: nowrap;
   overflow-x:auto;
 }
-
-.name {
-  white-space: nowrap;
-  margin-right:10px;
-}
-
-.table {
-  color:#800020; /* Burgundy */
-  font-weight:700;
-  flex-shrink:0;
-}
-
-@media (max-width:400px){
-  #search, .row{ font-size:0.85rem; padding:8px 12px;}
-}
+.name { white-space: nowrap; margin-right:10px; }
+.table { color:#800020; font-weight:700; flex-shrink:0; }
+@media (max-width:400px){ #search, .row{ font-size:0.85rem; padding:8px 12px;}}
 </style>
 </head>
 <body>
@@ -64,21 +48,24 @@ h1 {
 <input type="text" id="search" placeholder="Գրիր քո անունը" oninput="search(this.value)" />
 <div id="results"></div>
 
+<!-- OpenSheet.js -->
 <script src="https://cdn.jsdelivr.net/npm/opensheet.elk@1.0.2/dist/opensheet.min.js"></script>
 <script>
 let guests = [];
 
 // Փոխարինիր քո Google Sheet-ի ID-ով
 const sheetID = "1GF1ARQ52zejxKaIpS2At_D87OWhq92PYzVYCynDnItY"; // URL-ում `d/` և `/edit` միջև մասը
+const sheetName = "Sheet1"; // եթե շիթն այլ անուն ունի, այստեղ գրիր այն
 
-// Կարդում ենք միայն 2 սյունակ՝ Name + Table
-OpenSheet({ sheetId: sheetID, sheet: "Sheet1", format: "json" })
+// Կարդում ենք Google Sheet-ից միայն Name + Table
+OpenSheet({ sheetId: sheetID, sheet: sheetName, format: "json" })
   .then(data => { guests = data; })
   .catch(err => {
     console.error("Շիթը չի բացվում:", err);
     document.getElementById("results").innerHTML = "<div class='row'>Շիթը չի հասանելի</div>";
   });
 
+// Որոնման ֆունկցիա
 function search(value){
   const input = value.toLowerCase().trim();
   const result = document.getElementById("results");
