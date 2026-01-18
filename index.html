@@ -56,7 +56,7 @@ let guests = [];
 const sheetID = "1GF1ARQ52zejxKaIpS2At_D87OWhq92PYzVYCynDnItY"; // օրինակ՝ 1ABCDEFG1234567HIJKLMN
 const sheetName = "Sheet1"; // եթե շիթը այլ անուն ունի, գրիր այստեղ
 
-// Կարդում ենք Google Sheet-ից
+// Կարդում ենք Google Sheet-ից միայն Name + Table
 OpenSheet({ sheetId: sheetID, sheet: sheetName, format: "json" })
   .then(data => { guests = data; })
   .catch(err => {
