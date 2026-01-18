@@ -65,22 +65,23 @@ fetch(`https://opensheet.elk.sh/${SHEET_ID}/${SHEET_NAME}`)
   .catch(err => console.error("Error fetching sheet:", err));
 
 // ===== SEARCH FUNCTION =====
-function search(value) {
-  const input = value.toLowerCase().trim();
+function search() {
+  const input = document.getElementById("search").value.toLowerCase().trim();
   const result = document.getElementById("results");
-  
-  // Եթե input դատարկ է, ոչինչ չցուցադրել
+
+  // Եթե input-ը դատարկ է, հեռացրու ցուցակը
   if (input === "") {
-    result.innerHTML = "";
-    return;
+    result.innerHTML = "";  // մաքրում ենք ցանկը
+    return;                 // էլի ցույց չենք տալիս
   }
 
+  // Որոնում անցնում է միայն եթե ինչ-որ բան կա
   const matches = guests.filter(g =>
     g.Name.toLowerCase().includes(input) ||
     (g.Հայերեն_Անուն && g.Հայերեն_Անուն.toLowerCase().includes(input))
   );
 
-  result.innerHTML = "";
+  result.innerHTML = ""; // նախ մաքրում ենք նախորդ արդյունքները
 
   if(matches.length === 0) {
     result.innerHTML = "<div class='row'>Սեղան չի գտնվել</div>";
