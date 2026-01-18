@@ -4,86 +4,95 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Գտիր քո սեղանը</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
-body {
-  font-family: 'Montserrat', sans-serif;
-  background: linear-gradient(to right, #800020, #000);
-  color: #fff;
-  margin: 0;
-  padding: 40px 20px;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-h1 { font-size: 28px; margin-bottom: 25px; text-align:center; }
-input {
-  width: 100%; max-width: 400px; font-size: 18px;
-  padding: 14px 18px; border-radius: 10px; border: none;
-  outline: none; box-shadow: 0 3px 8px rgba(0,0,0,0.3);
-  margin-bottom: 25px; background: #fff; color: #000; font-weight: 500;
-}
-input::placeholder { color: #555; font-style: italic; }
-#results { width: 100%; max-width: 500px; }
-.row {
-  padding: 14px 18px; margin-bottom: 12px; background: #fff;
-  color: #000; border-radius: 8px; display: flex; justify-content: space-between;
-  align-items: center; font-size: 16px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.row:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(0,0,0,0.25); }
-.table { font-weight: 600; color: #800020; }
-@media (max-width: 600px) {
-  body { padding: 20px 15px; }
-  input { font-size: 16px; }
-  .row { font-size: 15px; flex-direction: column; align-items: flex-start; }
-  .table { margin-top: 6px; float: none; }
-}
+  body { 
+    font-family: 'Roboto', sans-serif; 
+    margin:0; 
+    padding:0; 
+    background: linear-gradient(to bottom, #4b0000, #1a0000); 
+    color:#fff; 
+    display:flex; 
+    flex-direction:column; 
+    align-items:center; 
+    min-height:100vh;
+  }
+  h1 { 
+    text-align:center; 
+    margin:30px 10px 20px 10px; 
+    font-weight:700; 
+    font-size:2rem;
+  }
+  #search { 
+    width:90%; 
+    max-width:500px; 
+    padding:12px 20px; 
+    font-size:1.1rem; 
+    border-radius:25px; 
+    border:none; 
+    margin-bottom:20px; 
+    box-sizing:border-box;
+  }
+  #results { 
+    width:90%; 
+    max-width:500px; 
+    display:flex; 
+    flex-direction:column; 
+    gap:10px;
+  }
+  .row { 
+    display:flex; 
+    justify-content:space-between; 
+    align-items:center; 
+    padding:12px 20px; 
+    background-color: rgba(255,255,255,0.1); 
+    border-radius:15px; 
+    word-break: break-word; 
+    font-size:1rem;
+  }
+  .table { 
+    color:#800020; 
+    font-weight:700; 
+  }
+  @media (max-width:400px){ 
+    #search, .row{ font-size:0.9rem; padding:10px 15px;}
+  }
 </style>
 </head>
 <body>
 
 <h1>Գտիր քո սեղանը</h1>
-<input type="text" placeholder="Գրիր քո անունը" oninput="search(this.value)">
+<input type="text" id="search" placeholder="Գրիր քո անունը" oninput="search(this.value)" />
 <div id="results"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/opensheet.elk@1.0.2/dist/opensheet.min.js"></script>
 <script>
-// ===== GOOGLE SHEET SETTINGS =====
-const SHEET_ID = "1GF1ARQ52zejxKaIpS2At_D87OWhq92PYzVYCynDnItY"; // <-- այստեղ Google Sheets ID դնես
-const SHEET_NAME = "Sheet1";    // <-- եթե էջի անունը փոխել ես, գրիր այն
 let guests = [];
 
-// ===== FETCH DATA FROM GOOGLE SHEET =====
-fetch(`https://opensheet.elk.sh/${SHEET_ID}/${SHEET_NAME}`)
-  .then(res => res.json())
-  .then(data => {
-    guests = data;
-    console.log("Guests loaded:", guests); // ստուգելու համար
-  })
-  .catch(err => console.error("Error fetching sheet:", err));
+// Փոխարինիր այստեղ Google Sheet-ի ID-ով
+const sheetID = "1GF1ARQ52zejxKaIpS2At_D87OWhq92PYzVYCynDnItY"; // URL-ում `d/` և `/edit` միջև մասը
 
-// ===== SEARCH FUNCTION =====
-function search() {
-  const input = document.getElementById("search").value.toLowerCase().trim();
+// Խնայում ենք բոլոր տվյալները
+OpenSheet({ sheetId: sheetID, sheet: "Sheet1", format: "json" })
+  .then(data => { guests = data; })
+  .catch(err => {
+    console.error("Շիթը չի բացվում:", err);
+    document.getElementById("results").innerHTML = "<div class='row'>Շիթը չի հասանելի</div>";
+  });
+
+function search(value){
+  const input = value.toLowerCase().trim();
   const result = document.getElementById("results");
+  result.innerHTML = "";
 
-  // Եթե input-ը դատարկ է, հեռացրու ցուցակը
-  if (input === "") {
-    result.innerHTML = "";  // մաքրում ենք ցանկը
-    return;                 // էլի ցույց չենք տալիս
-  }
+  if(input === "") return; // անունը ջնջելուց ցանկը չի երևա
 
-  // Որոնում անցնում է միայն եթե ինչ-որ բան կա
   const matches = guests.filter(g =>
-    g.Name.toLowerCase().includes(input) ||
+    (g.Name && g.Name.toLowerCase().includes(input)) ||
     (g.Հայերեն_Անուն && g.Հայերեն_Անուն.toLowerCase().includes(input))
   );
 
-  result.innerHTML = ""; // նախ մաքրում ենք նախորդ արդյունքները
-
-  if(matches.length === 0) {
+  if(matches.length === 0){
     result.innerHTML = "<div class='row'>Սեղան չի գտնվել</div>";
     return;
   }
@@ -91,12 +100,12 @@ function search() {
   matches.forEach(g => {
     result.innerHTML += `
       <div class="row">
-        ${g.Name} | ${g.Հայերեն_Անուն || ''} <span class="table">Սեղան ${g.Table}</span>
+        <span>${g.Name ? g.Name : ""}${g.Հայերեն_Անուն ? " | " + g.Հայերեն_Անուն : ""}</span>
+        <span class="table">Սեղան ${g.Table}</span>
       </div>
     `;
   });
 }
 </script>
-
 </body>
 </html>
