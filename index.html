@@ -58,20 +58,24 @@
 <script>
 // ===== GOOGLE SHEET SETTINGS =====
 const SHEET_ID = "1GF1ARQ52zejxKaIpS2At_D87OWhq92PYzVYCynDnItY/edit?gid=0#gid=0";  // <-- այստեղ դնես քո Google Sheet ID
-const SHEET_NAME = "Sheet1";     // եթե էջի անունը այլ է, փոխիր
+const SHEET_NAME = "Sheet1";     // եթե դու փոփոխել ես էջի անունը, փոխիր այստեղ
 let guests = [];
 
 // ===== FETCH DATA FROM GOOGLE SHEET =====
 fetch(`https://opensheet.elk.sh/${SHEET_ID}/${SHEET_NAME}`)
   .then(res => res.json())
-  .then(data => guests = data);
+  .then(data => {
+    console.log("Google Sheets data:", data); // Ստուգելու համար
+    guests = data;
+  })
+  .catch(err => console.error("Error fetching sheet:", err));
 
 // ===== SEARCH FUNCTION =====
 function search(value) {
   const result = document.getElementById("result");
   result.innerHTML = "";
 
-  if (value.length < 2) return;
+  if (value.length < 2) return; // ոչինչ չցուցադրել մինչև գրածը փոքր լինի
 
   const matches = guests.filter(g =>
     g.Name.toLowerCase().includes(value.toLowerCase())
