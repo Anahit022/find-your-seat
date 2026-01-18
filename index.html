@@ -8,12 +8,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
 
 :root {
-  /* Կենտրոնացված տողի չափսերը հեշտ փոփոխելու համար */
-  --line-width: 350px;    /* Input և row լայնությունը */
-  --line-padding: 14px 24px; /* Input և row բարձրությունը + ներքին մարգոն */
-  --font-size: 16px;      /* Տեքստի չափը */
-  --border-radius: 50px;  /* Օվալ ձև */
-  --gap: 20px;            /* Տողի միջև հեռավորություն */
+  --line-width: 350px;
+  --line-padding: 14px 24px;
+  --font-size: 16px;
+  --border-radius: 50px;
+  --gap: 20px;
 }
 
 body {
@@ -36,7 +35,7 @@ body {
 h1 { 
   font-size: 24px;
   margin-bottom: var(--gap);
-  text-align:center; 
+  text-align: center; 
 }
 
 /* ===== INPUT ===== */
@@ -60,7 +59,7 @@ input::placeholder {
   font-style: italic; 
 }
 
-/* ===== RESULTS ROW ===== */
+/* ===== RESULTS ===== */
 #results {
   width: 100%;
   max-width: var(--line-width);
@@ -77,17 +76,10 @@ input::placeholder {
   align-items: center;
   font-size: var(--font-size);
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.row:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 .guest-name {
   font-weight: 500;
-  word-break: break-word; /* Անունը դուրս չի գա */
 }
 
 .table {
@@ -96,13 +88,24 @@ input::placeholder {
   white-space: nowrap;
 }
 
-/* ===== MOBILE ===== */
+/* ===== MOBILE ONLY ===== */
 @media (max-width: 600px) {
+
   :root {
-    --line-width: 95%;       /* մոբայլում լայնությունը 95% էկրանից */
-    --line-padding: 12px 20px;
+    --line-width: 100%;      /* ✔ ամբողջ էկրանի լայնքով */
+    --line-padding: 14px 28px;
     --font-size: 15px;
     --gap: 15px;
+  }
+
+  h1 {
+    margin-bottom: 35px;    /* ✔ վերնագիրը մի քիչ վեր input-ից */
+  }
+
+  .guest-name {
+    white-space: nowrap;    /* ✔ տողադարձ չի լինի */
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 </style>
@@ -116,23 +119,19 @@ input::placeholder {
 </div>
 
 <script>
-// ===== GOOGLE SHEET SETTINGS =====
 const SHEET_ID = "1GF1ARQ52zejxKaIpS2At_D87OWhq92PYzVYCynDnItY";
 const SHEET_NAME = "Sheet1";
 let guests = [];
 
-// ===== FETCH DATA =====
 fetch(`https://opensheet.elk.sh/${SHEET_ID}/${SHEET_NAME}`)
   .then(res => res.json())
-  .then(data => { guests = data; })
-  .catch(err => console.error("Error fetching sheet:", err));
+  .then(data => { guests = data; });
 
-// ===== SEARCH FUNCTION =====
 function search(value) {
   const input = value.toLowerCase().trim();
   const result = document.getElementById("results");
 
-  if(input === "") {
+  if (input === "") {
     result.innerHTML = "";
     return;
   }
@@ -144,7 +143,7 @@ function search(value) {
 
   result.innerHTML = "";
 
-  if(matches.length === 0) {
+  if (matches.length === 0) {
     result.innerHTML = "<div class='row'>Սեղան չի գտնվել</div>";
     return;
   }
