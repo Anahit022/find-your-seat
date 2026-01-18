@@ -19,19 +19,19 @@ body {
   align-items: center;
 }
 
-/* ===== CENTER CONTENT ===== */
-.container {
+/* ===== CENTER CONTENT VERTICALLY ===== */
+.wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex: 1; /* Նորացնել միջին հատվածում կենտրոնացման համար */
-  padding: 20px 10px;
+  height: 80vh; /* ամբողջության 80%-ը օգտագործում է center համար */
+  padding: 0 10px;
 }
 
 h1 { 
   font-size: 24px;
-  margin-bottom: 40px; /* ավելացրեց հեռավորությունը որոնման input-ից */
+  margin-bottom: 40px; /* input-ի և վերնագրի միջև հեռավորություն */
   text-align:center; 
 }
 
@@ -105,8 +105,8 @@ input::placeholder {
 </head>
 <body>
 
-<div class="container">
-  <h1>Գտիր քո սեղանը</h1>
+<div class="wrapper">
+  <h1>ԳՏԻՐ ՔՈ ՍԵՂԱՆԸ</h1>
   <input type="text" placeholder="Գրեք Ձեր անունը" oninput="search(this.value)">
   <div id="results"></div>
 </div>
