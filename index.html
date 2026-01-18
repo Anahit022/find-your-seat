@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Գտիր քո սեղանը</title>
+<title>ԳՏԻՐ ՔՈ ՍԵՂԱՆԸ</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
 
@@ -27,10 +27,10 @@ h1 {
 
 /* ===== INPUT ===== */
 input {
-  width: 100%; 
-  max-width: 300px; /* փոքրացրել լայնությունը */
+  width: 90%; 
+  max-width: 280px; /* փոքր, կարճ լայնություն */
   font-size: 16px; 
-  padding: 10px 20px; 
+  padding: 12px 20px; 
   border-radius: 50px; /* օվալ ձև */
   border: none;
   outline: none; 
@@ -47,8 +47,8 @@ input::placeholder {
 }
 
 #results { 
-  width: 100%; 
-  max-width: 300px; /* համընկնում input-ի հետ */
+  width: 90%; 
+  max-width: 280px; 
 }
 
 /* ===== ROW STYLE ===== */
@@ -64,7 +64,7 @@ input::placeholder {
   font-size: 14px; 
   box-shadow: 0 1px 4px rgba(0,0,0,0.15);
   transition: transform 0.2s, box-shadow 0.2s;
-  gap: 15px; /* անունի և սեղանի միջև տարածություն */
+  gap: 10px; /* անունի և սեղանի միջև փոքր տարածություն */
 }
 
 .row:hover { 
@@ -84,19 +84,19 @@ input::placeholder {
 
 /* ===== MOBILE ===== */
 @media (max-width: 600px) {
-  input { font-size: 15px; padding: 8px 15px; max-width: 100%; }
+  input { font-size: 15px; padding: 10px 18px; max-width: 95%; }
   .row { 
     font-size: 13px; 
     gap: 8px;
   }
-  #results { max-width: 100%; }
+  #results { max-width: 95%; }
 }
 </style>
 </head>
 <body>
 
 <h1>Գտիր քո սեղանը</h1>
-<input type="text" placeholder="Գրեք Ձեր անունը" oninput="search(this.value)">
+<input type="text" placeholder="Գրեք Ձեր անունը " oninput="search(this.value)">
 <div id="results"></div>
 
 <script>
