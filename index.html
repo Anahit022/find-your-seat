@@ -12,7 +12,7 @@ body {
   background: linear-gradient(to right, #800020, #000);
   color: #fff;
   margin: 0;
-  padding: 30px 15px;
+  padding: 30px 10px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -25,16 +25,17 @@ h1 {
   text-align:center; 
 }
 
+/* ===== INPUT ===== */
 input {
   width: 100%; 
-  max-width: 360px; 
+  max-width: 300px; /* փոքրացրել լայնությունը */
   font-size: 16px; 
-  padding: 10px 14px; 
-  border-radius: 8px; 
+  padding: 10px 20px; 
+  border-radius: 50px; /* օվալ ձև */
   border: none;
   outline: none; 
   box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-  margin-bottom: 20px; 
+  margin-bottom: 15px; 
   background: #fff; 
   color: #000; 
   font-weight: 500;
@@ -47,22 +48,23 @@ input::placeholder {
 
 #results { 
   width: 100%; 
-  max-width: 360px; 
+  max-width: 300px; /* համընկնում input-ի հետ */
 }
 
 /* ===== ROW STYLE ===== */
 .row {
-  padding: 10px 14px; 
+  padding: 10px 20px; 
   margin-bottom: 10px; 
   background: #fff;
   color: #000; 
-  border-radius: 6px; 
+  border-radius: 50px; /* օվալ ձև */
   display: flex; 
-  justify-content: space-between; 
-  align-items: center; /* Անունն ու սեղանը կենտրոնում են */
+  justify-content: center; /* կենտրոնացնում է name & table միասին */
+  align-items: center; /* կենտրոնական գիծ */
   font-size: 14px; 
   box-shadow: 0 1px 4px rgba(0,0,0,0.15);
   transition: transform 0.2s, box-shadow 0.2s;
+  gap: 15px; /* անունի և սեղանի միջև տարածություն */
 }
 
 .row:hover { 
@@ -71,27 +73,20 @@ input::placeholder {
 }
 
 .guest-name {
-  flex: 1; /* Անունը զբաղեցնում է մնացած տարածությունը */
   font-weight: 500;
 }
 
 .table {
   font-weight: 600; 
   color: #800020; 
-  margin-left: 10px; 
-  flex-shrink: 0; 
-  white-space: nowrap; /* Սեղանը չի կոտրվի */
+  white-space: nowrap;
 }
 
 /* ===== MOBILE ===== */
 @media (max-width: 600px) {
-  body { padding: 20px 10px; }
-  input { font-size: 15px; padding: 8px 12px; max-width: 100%; }
+  input { font-size: 15px; padding: 8px 15px; max-width: 100%; }
   .row { 
     font-size: 13px; 
-    flex-direction: row; 
-    align-items: center; /* Կենտրոնում */ 
-    justify-content: space-between;
     gap: 8px;
   }
   #results { max-width: 100%; }
@@ -121,7 +116,6 @@ function search(value) {
   const input = value.toLowerCase().trim();
   const result = document.getElementById("results");
 
-  // Եթե տեքստ չկա, ցուցադրումը հեռացնել
   if(input === "") {
     result.innerHTML = "";
     return;
