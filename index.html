@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ԳՏԻՐ ՔՈ ՍԵՂԱՆԸ</title>
+<title>Գտիր քո սեղանը</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
 
@@ -25,20 +25,20 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 80vh; /* ամբողջության 80%-ը օգտագործում է center համար */
+  height: 80vh;
   padding: 0 10px;
 }
 
 h1 { 
   font-size: 24px;
-  margin-bottom: 40px; /* input-ի և վերնագրի միջև հեռավորություն */
+  margin-bottom: 40px; /* Input-ի և վերնագրի միջև հեռավորություն */
   text-align:center; 
 }
 
 /* ===== INPUT ===== */
 input {
-  width: 90%; 
-  max-width: 280px; 
+  width: 95%; 
+  max-width: 350px; /* Մի փոքր երկարացրեցի տողը */
   font-size: 16px; 
   padding: 12px 20px; 
   border-radius: 50px; 
@@ -57,8 +57,8 @@ input::placeholder {
 }
 
 #results { 
-  width: 90%; 
-  max-width: 280px; 
+  width: 95%; 
+  max-width: 350px; /* Ուղղված, երկար */
 }
 
 /* ===== ROW STYLE ===== */
@@ -69,27 +69,22 @@ input::placeholder {
   color: #000; 
   border-radius: 50px; 
   display: flex; 
-  justify-content: center; 
+  justify-content: space-between; /* Անունը ձախ, սեղանը աջ */
   align-items: center; 
   font-size: 14px; 
   box-shadow: 0 1px 4px rgba(0,0,0,0.15);
   transition: transform 0.2s, box-shadow 0.2s;
-  gap: 10px; 
-}
-
-.row:hover { 
-  transform: translateY(-1px); 
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2); 
 }
 
 .guest-name {
   font-weight: 500;
+  word-break: break-word; /* Անունը չի դուրս գա */
 }
 
 .table {
   font-weight: 600; 
   color: #800020; 
-  white-space: nowrap;
+  white-space: nowrap; /* Սեղանը միշտ մեկ տողի վրա */
 }
 
 /* ===== MOBILE ===== */
@@ -97,7 +92,6 @@ input::placeholder {
   input { font-size: 15px; padding: 10px 18px; max-width: 95%; }
   .row { 
     font-size: 13px; 
-    gap: 8px;
   }
   #results { max-width: 95%; }
 }
