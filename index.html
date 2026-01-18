@@ -56,12 +56,17 @@
 <div class="result" id="result"></div>
 
 <script>
-let guests = [
-  { Name: "Maria Harris", Table: 2 },
-  { Name: "Thomas Martin", Table: 3 },
-  { Name: "Lisa Martinez", Table: 3 }
-];
+// ===== GOOGLE SHEET SETTINGS =====
+const SHEET_ID = "1GF1ARQ52zejxKaIpS2At_D87OWhq92PYzVYCynDnItY/edit?gid=0#gid=0";  // <-- այստեղ դնես քո Google Sheet ID
+const SHEET_NAME = "Sheet1";     // եթե էջի անունը այլ է, փոխիր
+let guests = [];
 
+// ===== FETCH DATA FROM GOOGLE SHEET =====
+fetch(`https://opensheet.elk.sh/${SHEET_ID}/${SHEET_NAME}`)
+  .then(res => res.json())
+  .then(data => guests = data);
+
+// ===== SEARCH FUNCTION =====
 function search(value) {
   const result = document.getElementById("result");
   result.innerHTML = "";
