@@ -48,16 +48,15 @@ h1 {
 <input type="text" id="search" placeholder="Գրիր քո անունը" oninput="search(this.value)" />
 <div id="results"></div>
 
-<!-- OpenSheet.js -->
 <script src="https://cdn.jsdelivr.net/npm/opensheet.elk@1.0.2/dist/opensheet.min.js"></script>
 <script>
 let guests = [];
 
 // Փոխարինիր քո Google Sheet-ի ID-ով
-const sheetID = "1GF1ARQ52zejxKaIpS2At_D87OWhq92PYzVYCynDnItY"; // URL-ում `d/` և `/edit` միջև մասը
-const sheetName = "Sheet1"; // եթե շիթն այլ անուն ունի, այստեղ գրիր այն
+const sheetID = "1GF1ARQ52zejxKaIpS2At_D87OWhq92PYzVYCynDnItY"; // օրինակ՝ 1ABCDEFG1234567HIJKLMN
+const sheetName = "Sheet1"; // եթե շիթը այլ անուն ունի, գրիր այստեղ
 
-// Կարդում ենք Google Sheet-ից միայն Name + Table
+// Կարդում ենք Google Sheet-ից
 OpenSheet({ sheetId: sheetID, sheet: sheetName, format: "json" })
   .then(data => { guests = data; })
   .catch(err => {
@@ -71,11 +70,10 @@ function search(value){
   const result = document.getElementById("results");
   result.innerHTML = "";
 
-  if(input === "") return; // input դատարկ → ցանկը չի երևա
+  if(input === "") return;
 
-  const matches = guests.filter(g =>
-    g.Name && g.Name.toLowerCase().includes(input)
-  );
+  // Ֆիլտրում ենք միայն Name սյունակում
+  const matches = guests.filter(g => g.Name && g.Name.toLowerCase().includes(input));
 
   if(matches.length === 0){
     result.innerHTML = "<div class='row'>Սեղան չի գտնվել</div>";
